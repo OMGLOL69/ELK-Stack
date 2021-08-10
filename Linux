@@ -1,6 +1,15 @@
-ssh OMGLOL@Jump.box.192.168.1.6
+ssh OMGLOL@Jump.box.10.0.0.5
 sudo docker ps
 sudo docker container list -a
 sudo docker container start unusual_nueman
 sudo docker container attach unusual_neuman
 cat ~/.ssh/id_rsa.pub
+
+cd /etc/ansible
+cat > hosts <<EOF
+[webservers]
+10.0.0.5 10.0.0.6
+
+ansible-playbook install_elk.yml elk
+ansible-playbook install_filebeat.yml webservers
+ansible-playbook install_metricbeat.yml webservers
